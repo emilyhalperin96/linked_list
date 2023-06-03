@@ -110,7 +110,41 @@ class LinkedList:
             return True 
         return False 
     
+    def reverse(self):
+        temp = self.head 
+        self.head = self.tail
+        self.tail = temp 
+        after = temp.next
+        before = None 
+        for _ in range(self.length):
+            # temp is 3 
+            # after becomes 23 
+            after = temp.next
+            # now 3 points to before
+            temp.next = before 
+            #becomes 3 
+            before = temp 
+            #temp becomes 23
+            temp = after 
+#[11, 3, 23, 7]
+    #without using length 
+    def find_middle_node(self):
+        slow = self.head
+        fast = self.head 
+        while fast != None and fast.next != None:
+            slow = slow.next
+            fast = fast.next.next 
+        return slow 
     
+    def has_loop(self):
+        slow = self.head
+        fast = self.head 
+        while fast != None and fast.next != None:
+            slow = slow.next 
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
 
         
 
