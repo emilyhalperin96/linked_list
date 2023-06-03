@@ -39,7 +39,34 @@ class LinkedList:
         return True 
 
     def insert(self, index, value):
-        pass
+        if index < 0 or index > self.length:
+            return False
+        if index == 0:
+            return self.prepend(value)
+        if index == self.length:
+            return self.append(value)
+        # to insert, we need a variable that points to the index before we are inserting
+        new_node = Node(value)
+        temp = self.get(index - 1)
+        new_node.next = temp.next
+        temp.next = new_node 
+        self.length += 1 
+        return True 
+    #return None instead of False b/c if you're successful in insert, you return True 
+        #in remove, if we're successful, we return a node 
+    def remove(self, index):
+        if index < 0 or index >= self.length:
+            return None
+        if index == 0:
+            return self.pop_first()
+        if index == self.length - 1:  # last index 
+            return self.pop()
+        prev = self.get(index -1)
+        temp = prev.next
+        prev.next = temp.next 
+        temp.next = None 
+        self.length -= 1 
+        return temp 
 
     def pop(self):
         if self.length == 0:
@@ -82,6 +109,10 @@ class LinkedList:
             temp.value = value 
             return True 
         return False 
+    
+    
+
+        
 
 
 my_linked_list = LinkedList(1)
