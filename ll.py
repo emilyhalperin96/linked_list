@@ -145,6 +145,61 @@ class LinkedList:
             if slow == fast:
                 return True
         return False
+    
+    def find_kth_from_end(ll, k):
+        slow, fast = ll.head 
+        for _ in range(k):
+            if fast == None:
+                return None
+            fast = fast.next
+        while fast:
+            slow = slow.next
+            fast = fast.next
+        return slow 
+
+    def reverse_between(self, m, n):
+        if self.length <= 1:
+            return 
+        dummy = Node(0) #dummy handles cases when the head of the list is also reversed
+        dummy.next = self.head 
+        prev = dummy 
+        #move the prev pointer forward 
+        for i in range(m):
+            prev = prev.next
+        # after the loop, the prev will point to the node just before the mth node (m-1)
+        current = prev.next 
+        #iterate from 0 to n-m to reverse the section of the linked list between those indicies 
+        for i in range(n - m):
+            #temp = current.next (next node to be reversed)
+            #the temp pointer holds the next node that will be moved to the beginning of the reversed section
+            temp = current.next
+            #detach temp from its current position and connect the current node to the remaing part of the sublist that is yet to be reversed
+            current.next = temp.next
+            #update temp.next to point to the node currently next to prev 
+            #places temp node at beginning of reversed section
+            temp.next = prev.next
+            #connect temp node 
+            prev.next = temp 
+        #after each iteration, the current node remains the same but the sublist between the current node and the nth node is gradually reversed
+        #update head to the node next to the dummy to ensure that if the head was reversed, the new head will be correctly assigned
+        self.head = dummy.next
+
+    #O(n) with set 
+    def remove_duplicates(self):
+        values = set()
+        previous = None
+        current = self.head 
+        while current != None:
+            if current.value in values:
+                previous.next = current.next 
+                self.length -= 1 
+            else:
+                values.add(current.value)
+                previous = current
+            current = current.next
+
+        
+
 
         
 
